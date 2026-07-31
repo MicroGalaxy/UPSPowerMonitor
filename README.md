@@ -8,6 +8,8 @@
     <img src="https://img.shields.io/badge/UI-WPF-2563EB" alt="WPF" />
     <img src="https://img.shields.io/badge/Windows-Server%202019%2B-0078D4?logo=windows" alt="Windows Server 2019+" />
     <img src="https://img.shields.io/badge/Platform-win--x64-0F172A" alt="win-x64" />
+    <a href="https://github.com/MicroGalaxy/UPSPowerMonitor/actions/workflows/build.yml"><img src="https://github.com/MicroGalaxy/UPSPowerMonitor/actions/workflows/build.yml/badge.svg" alt="Windows Build" /></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-16A34A" alt="MIT License" /></a>
   </p>
 </div>
 
@@ -113,7 +115,7 @@ Windows Server Core 可以运行后台服务，但无法显示 WPF 配置界面�
 需要 .NET 8 SDK 或 Visual Studio 2022 的“.NET 桌面开发”工作负载。
 
 ```powershell
-git clone <repository-url>
+git clone https://github.com/MicroGalaxy/UPSPowerMonitor.git
 cd UPSPowerMonitor
 dotnet restore .\UPSPowerMonitor.sln --disable-parallel
 dotnet build .\UPSPowerMonitor.sln -c Release --no-restore -m:1
@@ -180,3 +182,7 @@ UPSPowerMonitor/
 
 - [Bark](https://github.com/Finb/Bark) — 简洁可靠的 iOS 推送工具。
 - .NET、WPF 和 Windows Service APIs。
+
+## 许可证
+
+本项目采用 [MIT License](LICENSE)。

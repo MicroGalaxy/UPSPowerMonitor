@@ -12,6 +12,11 @@
     <AssemblyName>UPSPowerMonitor</AssemblyName>
     <RootNamespace>UPSPowerMonitor</RootNamespace>
     <Version>1.1.0</Version>
+    <Product>UPS Power Monitor</Product>
+    <Description>面向 Windows Server 的 UPS 电源监控与 Bark 远程告警工具</Description>
+    <Authors>MicroGalaxy</Authors>
+    <RepositoryUrl>https://github.com/MicroGalaxy/UPSPowerMonitor</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

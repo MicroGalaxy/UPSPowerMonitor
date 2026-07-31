@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore .\UPSPowerMonitor.sln -r win-x64 --disable-parallel
+
+      - name: Publish self-contained package
+        run: >-
+          dotnet publish .\UPSPowerMonitor.csproj
+          -c Release
+          -r win-x64
+          --self-contained true
+          -p:PublishSingleFile=true
+          --no-restore
+          -o .\artifacts\win-x64
+
+      - name: Package release files
+        shell: pwsh
+        run: |
+          $releaseTag = "${{ github.ref_name }}"
+          $packageName = "UPSPowerMonitor-$releaseTag-win-x64.zip"
+          $packagePath = Join-Path ".\artifacts" $packageName
+          $checksumPath = "$packagePath.sha256"
+
+          Copy-Item -LiteralPath ".\README.md" -Destination ".\artifacts\win-x64\README.md"
+          Copy-Item -LiteralPath ".\LICENSE" -Destination ".\artifacts\win-x64\LICENSE"
+          Compress-Archive -Path ".\artifacts\win-x64\*" -DestinationPath $packagePath -CompressionLevel Optimal
+
+          $hash = (Get-FileHash -LiteralPath $packagePath -Algorithm SHA256).Hash
+          "$hash  $packageName" | Set-Content -LiteralPath $checksumPath -Encoding ascii
+
+      - name: Create GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $releaseTag = "${{ github.ref_name }}"
+          $packagePath = ".\artifacts\UPSPowerMonitor-$releaseTag-win-x64.zip"
+          $checksumPath = "$packagePath.sha256"
+          $notesPath = ".github\release-notes\$releaseTag.md"
+
+          gh release create $releaseTag `
+            "$packagePath#Windows x64 self-contained package" `
+            "$checksumPath#SHA-256 checksum" `
+            --verify-tag `
+            --title "UPS Power Monitor $releaseTag" `
+            --notes-file $notesPath

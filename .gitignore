@@ -1,0 +1,32 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+[Aa]rtifacts/
+[Pp]ublish/
+[Tt]est[Rr]esults/
+
+# IDE
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Local and temporary files
+*.log
+*.tmp
+*.bak
+settings.json
+Assets/app-icon-chroma.png
+
+# Certificates and secrets
+*.pfx
+*.snk
+.env
+.env.*
+
+# OS metadata
+Thumbs.db
+Desktop.ini
+.DS_Store
